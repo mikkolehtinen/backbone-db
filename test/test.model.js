@@ -81,14 +81,22 @@ describe('Model', function() {
     });
 
     it('should override id creation function', function(t) {
+      var Id = function(name) {
+        this.name = name;
+      };
+      Id.prototype.toString = function() {
+        return this.name;
+      };
+
       var ABCModel = MyModel.extend({
         createId: function(callback) {
-          callback(null, 'abc');
+          callback(null, new Id('abc'));
         }
       });
       var m = new ABCModel();
       m.save(null, {
         success: function() {
+          assert(typeof m.id === 'object');
           assert.equal(m.id, 'abc');
           t();
         },
