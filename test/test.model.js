@@ -79,5 +79,24 @@ describe('Model', function() {
         }
       });
     });
+
+    it('should override id creation function', function(t) {
+      var ABCModel = MyModel.extend({
+        createId: function(callback) {
+          callback(null, 'abc');
+        }
+      });
+      var m = new ABCModel();
+      m.save(null, {
+        success: function() {
+          assert.equal(m.id, 'abc');
+          t();
+        },
+        error: function(err) {
+          console.error(err);
+          assert.ok(false);
+        }
+      });
+    });
   });
 });
