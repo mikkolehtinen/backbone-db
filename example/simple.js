@@ -1,18 +1,12 @@
-# Backbone DB
+var DB = require('../');
+var _ = require('lodash');
+var Backbone = require('backbone');
 
-Backbone database interface and in-process reference implementation
 
-### api
+/* invokes the correct DB interface methods on this or this.db
 
-```js
-var DB = function DB(name) {
-  this.name = name;
-};
 
-/** the interface of the backbone-db exported module. 
-  * It invokes the correct DB interface methods on this or this.db
-  * backbone-db .sync delegates CREATE, READ, UPDATE and DELETE to this interface
-
+// backbone-db .sync delegates CREATE, READ, UPDATE and DELETE to this interface
 _.extend(DB.prototype, Backbone.Events, {
   find: function(model, options, cb) {},
   findAll: function(model, options, cb) {},
@@ -21,7 +15,7 @@ _.extend(DB.prototype, Backbone.Events, {
   destroy: function(model, options, cb) {},
   sync: function(method, model ,options) {} // sync delegates ti the methods above, should not be extended.
 });
-**/
+*/
 
 var store = new DB('mymodels');
 
@@ -46,6 +40,3 @@ me.save(null, {success: function() {
 }, error: function(err) {
   console.error(err);
 }});
-// Output: My username: Nomon
-
-```
